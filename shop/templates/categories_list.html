@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+         <head>
+                  <meta charset="utf-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
+                  <title>Llista de Categories</title>
+                  {% load static %}
+                  <link rel="stylesheet" type="text/css" href="{% static 'shop/css/styles.css' %}">
+         </head>
+
+         <body id="categories">
+                  <h1>Llistat de Productes</h1>
+                  <ul>
+                           {% for categoria in categories %}
+                           <li> <a href="cat/{{categoria.nom}}">{{categoria.nom}}</a> </li>
+                           {% endfor %}
+                  </ul>
+         </body>
+
+</html>

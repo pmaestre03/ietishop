@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+         <head>
+                  <meta charset="utf-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
+                  <title>Llista de Productes</title>
+                  {% load static %}
+                  <link rel="stylesheet" type="text/css" href="{% static 'shop/css/styles.css' %}">
+         </head>
+
+         <body id="products">
+                  <h1>Llistat de Productes</h1>
+                  <ul>
+                           {% for producte in productes %}
+                           <li><a href="/shop/prod/{{producte.nom}}">{{producte.nom}}</a></li>
+                           {% endfor %}
+                  </ul>
+         </body>
+
+</html>
