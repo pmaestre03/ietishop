@@ -1,15 +1,18 @@
-#details {
-         background-color: lightblue;
+body {
+         background-color: white;
 }
 
-#categories {
-         background-color: lightblue;
+.layout {
+         display: grid;
+         grid-template-columns: 20% 20% 20% 20% 20%;
 }
 
-#products {
-         background-color: lightblue;
+.product {
+    background-color: lightblue;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    justify-content: justify;   
+    border-radius: 10px;
 }
 
-a:visited {
-         color: purple;
-}

@@ -1,21 +1,85 @@
 <!DOCTYPE html>
 <html>
 
-         <head>
-                  <meta charset="utf-8">
-                  <meta name="viewport" content="width=device-width, initial-scale=1">
-                  <title>Llista de Productes</title>
-                  {% load static %}
-                  <link rel="stylesheet" type="text/css" href="{% static 'shop/css/styles.css' %}">
-         </head>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Llista de Productes</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'shop/css/styles.css' %}">
+    </head>
 
-         <body id="products">
-                  <h1>Llistat de Productes</h1>
-                  <ul>
-                           {% for producte in productes %}
-                           <li><a href="/shop/prod/{{producte.nom}}">{{producte.nom}}</a></li>
-                           {% endfor %}
-                  </ul>
-         </body>
+    <body>
+        <h1>Llistat de Productes</h1>
+        <h2><a href="cistella">Cistella</a></h2>
+        <select>
+            <option selected>Selecciona una categoria...</option>
+            {% for categoria in categories %}
+            <option value="{{categoria.id}}">{{categoria.nom}}</option>
+            {% endfor %}
+        </select>
+
+        <div class="layout">
+            {% for producte in productes %}
+            <div class="product" loading="lazy">
+                <img src="{{producte.imatge.url}}" alt="{{producte.nom}}">
+                <h2>{{producte.nom}}</h2>
+                <p>{{producte.descripcio}}</p>
+                <p>{{producte.quantitat_disponible}} unitats disponibles</p>
+                <input type="button" id="{{producte.id}}" value="Afegir a cistella">
+            </div>
+            {% endfor %}
+        </div>
+        <script>
+            function displayProds(res) {
+                const productes = res.productes
+                $('div').empty()
+                console.log(productes)
+                productes.forEach(producte => {
+                    $('.layout').append(
+                        `<div class="product" loading="lazy">
+                                                      <img src="${producte.imatge}" alt="${producte.nom}">
+                                                      <h2>${producte.nom}</h2>
+                                                      <p>${producte.preu} €</p>
+                                                      <p>${producte.quantitat_disponible} unitats</p>
+                                                        <input type="button" value="Afegir a cistella">
+
+                                                      </div>`
+                    )
+
+                })
+            }
+
+            $('input').on('click', function () {
+                var id = $(this).attr('id')
+                var nom = $(this).siblings('h2').text()
+                var preu = $(this).siblings('p').text()
+                mi_cistella =
+                    
+                        {
+                            id: id,
+                            nom: nom,
+                            preu: preu
+                        }
+                    
+                if (localStorage.getItem('cistella') === null) {
+                    localStorage.setItem('cistella', JSON.stringify(mi_cistella))
+                }
+
+                localStorage.setItem('cistella', localStorage.getItem('cistella') + ',' + JSON.stringify(mi_cistella))
+            })
+            $('select').on('change', function () {
+                var id = $(this).val()
+
+                $.ajax({
+                    url: 'api/products/' + id,
+                    method: 'GET',
+                    success: displayProds,
+                    error: () => console.error('No se pudo')
+                })
+            })
+        </script>
+    </body>
 
 </html>
