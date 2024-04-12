@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-=okpv5-h&g=k*!5ovqx((=9wq)=2)vj@kw1m^p(5z0_j9xzfhx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'pmaestrefernandez.ieti.site',  # Example existing host
+    '192.168.151.112',  # New host to be added
+]
 
 
 # Application definition
